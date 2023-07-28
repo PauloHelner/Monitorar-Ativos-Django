@@ -5,6 +5,9 @@
     --black: #2b2d42;
     --white: #fff;
     --thumb: #edf2f4;
+    --dark-backgorund: #1e1e2f;
+    --light-backgorund: #27293d;
+    --primary: #e14eca;
 }
   
 * {
@@ -14,20 +17,25 @@
 }
   
 body {
-    font: 16px / 24px "Rubik", sans-serif;
-    color: var(--black);
-    background: var(--platinum);
+    font-family:Poppins,sans-serif;
+    color: #BFBFC5;
+    background: linear-gradient(#1e1e2f,#1e1e24);
     margin: 50px 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100%;
 }
   
 .container {
     max-width: 1400px;
+    min-width: 720px;
     padding: 0 15px;
     margin: 0 auto;
 }
   
 h2 {
     font-size: 32px;
+    font-weight: 300;
     margin-bottom: 1em;
 }
   
@@ -46,7 +54,7 @@ h2 {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    background: var(--white);
+    background: var(--light-backgorund);
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 15%);
     scroll-snap-align: start;
@@ -55,11 +63,12 @@ h2 {
   
 .card:hover {
     color: var(--white);
-    background: var(--orange);
+    background: var(--primary);
 }
   
 .card .card-title {
-    font-size: 20px;
+    font-size: 27px;
+    font-weight: 200;
 }
   
 .card .card-content {
@@ -75,14 +84,14 @@ h2 {
     display: inline-block;
     text-decoration: none;
     color: white;
-    background: var(--orange);
+    background-image: linear-gradient(to bottom left,#e14eca,#ba54f5,#e14eca);
     padding: 6px 12px;
     border-radius: 8px;
     transition: background 0.2s;
 }
   
 .card:hover .card-link {
-    background: var(--darkorange);
+    background-image: linear-gradient(to bottom left,#27293d,#1e1e2f,#27293d);
 }
   
 .cards::-webkit-scrollbar {
@@ -152,15 +161,15 @@ h2 {
     font-family: sans-serif;
     width: 100%;
     min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    border-radius: 12px;
+    /*box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);*/
+    border-radius: 5px;
     overflow: hidden;
 }
 
 .styled-table thead tr {
-    background-color: #009879;
-    color: #ffffff;
+    color: var(--primary);
     text-align: left;
+    border-bottom: 2px solid var(--primary);
 }
 
 .styled-table th,
@@ -168,28 +177,90 @@ h2 {
     padding: 12px 15px;
 }
 
+.styled-table td:nth-child(1) {
+    font-weight: bold;
+}
+
 .styled-table th:nth-child(n+3),
 .styled-table td:nth-child(n+3) {
     text-align: right;
-  }
-
-.styled-table tbody tr {
-    border-bottom: 1px solid #dddddd;
 }
 
-.styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+.styled-table td:nth-child(6) {
+    text-align: left;
+    font-size: 12px;
+    width: 60px;
+    padding: 0px 0px;
+    font-weight: bold;
+}
+
+.color_change {
+    color: #a71638;
+}
+
+.color_change_positive {
+    color: #009879;
+}
+
+.styled-table tbody tr {
+    border-bottom: .0625rem solid #3D3F51;
 }
 
 .styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
+    border-bottom: 0px solid var(--primary);
 }
 
 .styled-table tbody tr:hover {
-    color: #009879;
+    color: var(--primary);
 }
 
 .styled-table tbody tr.active-row {
     font-weight: bold;
-    color: #009879;
+    color: var(--primary);
 }
+
+.table-container {
+    background: var(--light-backgorund);
+    padding: 15px;
+    border-radius: .2857rem;
+}
+
+
+
+
+
+.form-control::-moz-placeholder {
+    color:#6c757c;
+    opacity:1;
+    filter:alpha(opacity=100)
+   }
+   .form-control:-moz-placeholder {
+    color:#6c757c;
+    opacity:1;
+    filter:alpha(opacity=100)
+   }
+   .form-control::-webkit-input-placeholder {
+    color:#6c757c;
+    opacity:1;
+    filter:alpha(opacity=100)
+   }
+   .form-control:-ms-input-placeholder {
+    color:#6c757c;
+    opacity:1;
+    filter:alpha(opacity=100)
+   }
+   .form-control {
+    border-color:#2b3553;
+    border-radius:.4285rem;
+    font-size:.75rem;
+    -webkit-transition:color .3s ease-in-out,border-color .3s ease-in-out,background-color .3s ease-in-out;
+    -moz-transition:color .3s ease-in-out,border-color .3s ease-in-out,background-color .3s ease-in-out;
+    -o-transition:color .3s ease-in-out,border-color .3s ease-in-out,background-color .3s ease-in-out;
+    -ms-transition:color .3s ease-in-out,border-color .3s ease-in-out,background-color .3s ease-in-out;
+    transition:color .3s ease-in-out,border-color .3s ease-in-out,background-color .3s ease-in-out
+   }
+   .form-control:focus {
+    border-color:#e14eca;
+    background-color:transparent;
+    box-shadow:none
+   }

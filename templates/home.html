@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Cotação de Ativos{% endblock %}
 
 {% block content %}
 {% if user.is_authenticated %}
@@ -33,29 +33,32 @@
         </div>
       </li>
     </ul>
-    <div class="table-container"><table class="styled-table">
-      <thead>
+    <div class="table-container">
+      <table class="styled-table">
+        <thead>
           <tr>
               <th class="string-cell">Código</th>
               <th class="string-cell">Nome</th>
               <th class="value-cell">Último Fechamento</th>
               <th class="value-cell">Abertura</th>
               <th class="value-cell">Cotação</th>
+              <th><span></span></th>
           </tr>
-      </thead>
-      <tbody>
-        {% for ativo in api %}
-          <tr>
-              <td>{{ativo.ticker}}</td>
-              <td>{{ativo.name}}</td>
-              <td>{{ativo.currency_symbol}} {{ativo.previous_close|floatformat:2}}</td>
-              <td>{{ativo.currency_symbol}} {{ativo.open|floatformat:2}}</td>
-              <td>{{ativo.currency_symbol}} {{ativo.price|floatformat:2}}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table></div>
-    
+        </thead>
+        <tbody>
+          {% for ativo in api %}
+            <tr>
+                <td>{{ativo.ticker}}</td>
+                <td>{{ativo.name}}</td>
+                <td>{{ativo.currency_symbol}} {{ativo.previous_close|floatformat:2}}</td>
+                <td>{{ativo.currency_symbol}} {{ativo.open|floatformat:2}}</td>
+                <td>{{ativo.currency_symbol}} {{ativo.price|floatformat:2}}</td>
+                <td class="color_change{% if ativo.change_percent >= 0 %}_positive{% endif %}">({% if ativo.change_percent >= 0 %}+{% endif %}{{ativo.change_percent|floatformat:2}}%)</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
   
 

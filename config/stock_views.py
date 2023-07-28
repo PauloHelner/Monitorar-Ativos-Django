@@ -19,7 +19,7 @@ class Ativo:
         self.previous_close = float(data["regularMarketPreviousClose"])
         self.open = float(data["regularMarketOpen"])
         self.price = float(data["regularMarketPrice"])
-        self.change_percent = float(data["regularMarketChangePercent"])
+        self.change_percent = 100.0 * float(data["regularMarketChangePercent"])
 
 
 def home(request):
@@ -38,7 +38,6 @@ def home(request):
             # )
             # yahoo_ticker_list.append(valid_ticker)
             new_data = yq.Ticker(ticker_list[index]).price
-            print(new_data)
             ativo = Ativo(ticker_list[index], new_data[ticker_list[index]])
             ativos_list.append(ativo)
 
