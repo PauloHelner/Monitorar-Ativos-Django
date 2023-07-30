@@ -9,4 +9,5 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     # path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path("", stock_views.home, name="home"),
+    path("add/<saved_ticker>", stock_views.add_stock, name="add"),
 ]

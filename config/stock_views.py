@@ -23,48 +23,36 @@ class Ativo:
 
 
 def home(request):
-    api_request = requests.get("https://brapi.dev/api/available")
-    aapl = yq.Ticker("petr4.sa")
+    ativos_list = []
+    saved_list = []
+    if request.user.is_authenticated:
+        api_request = requests.get("https://brapi.dev/api/available")
+        saved_tickers = Stock.objects.filter(owner=request.user)
+        try:
+            for element in saved_tickers:
+                update_data = yq.Ticker(str(element)).price
+                updated = Ativo(str(element), update_data[str(element)])
+                saved_list.append(updated)
+        except Exception as e:
+            api = "error"
+        try:
+            api = json.loads(api_request.content)
+            ticker_list = []
+            for element in api["stocks"]:
+                ticker_list.append(element + ".SA")
+            for index in range(10):
+                new_data = yq.Ticker(ticker_list[index]).price
+                ativo = Ativo(ticker_list[index], new_data[ticker_list[index]])
+                ativos_list.append(ativo)
+        except Exception as e:
+            api = "error"
+    return render(request, "home.html", {"api": ativos_list, "saved": saved_list})
 
-    try:
-        api = json.loads(api_request.content)
-        ticker_list = []
-        ativos_list = []
-        for element in api["stocks"]:
-            ticker_list.append(element + ".SA")
-        for index in range(10):
-            # valid_ticker = str(
-            #    yq.search(ticker, first_quote=True, country="Brazil")["symbol"]
-            # )
-            # yahoo_ticker_list.append(valid_ticker)
-            new_data = yq.Ticker(ticker_list[index]).price
-            ativo = Ativo(ticker_list[index], new_data[ticker_list[index]])
-            ativos_list.append(ativo)
 
-    except Exception as e:
-        api = "error"
-    return render(request, "home.html", {"api": ativos_list})
-
-
-#    if request.method == "POST":
-#        ticker = request.POST["ticker"]
-#        api_request = requests.get("https://mfinance.com.br/api/v1/fiis/ALMI11")
-#        try:
-#            api = json.loads(api_request.content)
-#        except Exception as e:
-#            api = "error"
-#        return render(request, "home.html", {"api": api})
-#
-#    else:
-#        ticker = Stock.objects.all()
-#        output = []
-#        for ticker_item in ticker:
-#            api_request = requests.get("https://mfinance.com.br/api/v1/fiis/ALMI11")
-#            try:
-#                api = json.loads(api_request.content)
-#                output.append(api)
-#            except Exception as e:
-#                api = "error"
-#        return render(
-#            request, "home.html", {"ticker": "Ticker Does not exist", "output": output}
-#        )
+def add_stock(request, saved_ticker):
+    if request.user.is_authenticated:
+        try:
+            Stock.objects.create(ticker=saved_ticker, owner=request.user)
+        except Exception as e:
+            print(e)
+        return redirect("home")

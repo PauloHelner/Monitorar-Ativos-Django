@@ -65,15 +65,39 @@ h2 {
     color: var(--white);
     background: var(--primary);
 }
-  
+
+
 .card .card-title {
     font-size: 27px;
     font-weight: 200;
 }
-  
-.card .card-content {
-    margin: 20px 0;
-    max-width: 85%;
+
+.card .card-subtitle {
+    margin: 0 0 10px 0;
+    font-size: 15px;
+    max-width: 100%;
+}
+
+.card .card-price {
+    margin: 0 0 10px 0;
+    max-width: 100%;
+    font-size: 30px;
+    text-align: right;
+    color: #a71638;
+}
+
+.card .card-price-positive {
+    margin: 0 0 10px 0;
+    max-width: 100%;
+    font-size: 30px;
+    text-align: right;
+    color: #009879;
+}
+
+.card .card-price-change {
+    margin: 0 0 10px 0;
+    max-width: 100%;
+    font-size: 12px;
 }
   
 .card .card-link-wrapper {
@@ -225,42 +249,20 @@ h2 {
     border-radius: .2857rem;
 }
 
-
-
-
-
-.form-control::-moz-placeholder {
-    color:#6c757c;
-    opacity:1;
-    filter:alpha(opacity=100)
-   }
-   .form-control:-moz-placeholder {
-    color:#6c757c;
-    opacity:1;
-    filter:alpha(opacity=100)
-   }
-   .form-control::-webkit-input-placeholder {
-    color:#6c757c;
-    opacity:1;
-    filter:alpha(opacity=100)
-   }
-   .form-control:-ms-input-placeholder {
-    color:#6c757c;
-    opacity:1;
-    filter:alpha(opacity=100)
-   }
-   .form-control {
-    border-color:#2b3553;
-    border-radius:.4285rem;
-    font-size:.75rem;
-    -webkit-transition:color .3s ease-in-out,border-color .3s ease-in-out,background-color .3s ease-in-out;
-    -moz-transition:color .3s ease-in-out,border-color .3s ease-in-out,background-color .3s ease-in-out;
-    -o-transition:color .3s ease-in-out,border-color .3s ease-in-out,background-color .3s ease-in-out;
-    -ms-transition:color .3s ease-in-out,border-color .3s ease-in-out,background-color .3s ease-in-out;
-    transition:color .3s ease-in-out,border-color .3s ease-in-out,background-color .3s ease-in-out
-   }
-   .form-control:focus {
-    border-color:#e14eca;
-    background-color:transparent;
-    box-shadow:none
-   }
+.styled-table tbody tr .table-link-wrapper {
+    margin-top: auto;
+}
+  
+.styled-table tbody tr .table-link {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    background-image: linear-gradient(to bottom left,#27293d,#1e1e2f,#27293d);
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+  
+.styled-table tbody tr:hover .table-link {
+    background-image: linear-gradient(to bottom left,#e14eca,#ba54f5,#e14eca);
+}

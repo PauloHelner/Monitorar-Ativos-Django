@@ -9,30 +9,31 @@
   <p><a href="{% url 'password_reset' %}">Reset Password</a></p>
   <div class="container">
     <h2>Cotação de Ativos da B3</h2>
-    <ul class="cards">
-      <li class="card">
-        <div>
-          <h3 class="card-title">Service 1</h3>
-          <div class="card-content">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          </div>
-        </div>
-        <div class="card-link-wrapper">
-          <a href="" class="card-link">Learn More</a>
-        </div>
-      </li>
-      <li class="card">
-        <div>
-          <h3 class="card-title">{{api.0.ticker}}</h3>
-          <div class="card-content">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab repudiandae magnam harum natus fuga et repellat in maiores.</p>
-          </div>
-        </div>
-        <div class="card-link-wrapper">
-          <a href="" class="card-link">Learn More</a>
-        </div>
-      </li>
-    </ul>
+      {% if saved %}
+        <ul class="cards">
+          {% for ativo in saved %}
+            <li class="card">
+              <div>
+                <h3 class="card-title">{{ativo.ticker}}</h3>
+                <div class="card-subtitle">
+                  <p>{{ativo.name}}</p>
+                </div>
+                <div class="card-price{% if ativo.change_percent >= 0 %}-positive{% endif %}">
+                  <p>{{ativo.currency_symbol}} {{ativo.price|floatformat:2}}</p>
+                  <div class="card-price-change">
+                    ({% if ativo.change_percent >= 0 %}+{% endif %}{{ativo.change_percent|floatformat:2}}%)
+                  </div>
+                </div>
+              </div>
+              <div class="card-link-wrapper">
+                <a href="" class="card-link">Monitoramento</a>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <h2>Selecione o código de um ativo para salvá-lo.</h2>
+      {% endif %}
     <div class="table-container">
       <table class="styled-table">
         <thead>
@@ -48,7 +49,11 @@
         <tbody>
           {% for ativo in api %}
             <tr>
-                <td>{{ativo.ticker}}</td>
+                <td>
+                  <div class="table-link-wrapper">
+                    <a href="{% url 'add' ativo.ticker %}" class="table-link">{{ativo.ticker}}</a>
+                  </div>
+                </td>
                 <td>{{ativo.name}}</td>
                 <td>{{ativo.currency_symbol}} {{ativo.previous_close|floatformat:2}}</td>
                 <td>{{ativo.currency_symbol}} {{ativo.open|floatformat:2}}</td>
