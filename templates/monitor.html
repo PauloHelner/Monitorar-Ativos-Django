@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Monitor{% endblock %}
+
+{% block content %}
+<div class='monitor-div'>
+  <section class='monitor' id='monitor'>
+    <div class='head'>
+    <h1 class='company'>{{data.ticker}}</h1>
+    </div>
+    <p class='msg'>{{data.name}}</p>
+    <div class='parent grid-parent'></div>
+    
+    <div class='form'>
+      <form action="/edit/{{data.ticker}}" method="post">
+        {% csrf_token %}
+        <div class='parent flex-parent'>
+          <div class='child flex-child'>
+            <div class='parent flex-parent'>
+              <div class='child flex-child-title'>
+                Venda: R$   
+              </div>
+              <div class='child flex-child'>
+                <input id="top" name="top" type="number" placeholder='(R$)' class='price' required step="0.01" min="0" value={{saved_data.top}}><br>
+              </div>
+            </div>
+            <div class='parent flex-parent'>
+              <div class='child flex-child-title'>
+                Compra: R$   
+              </div>
+              <div class='child flex-child'>
+                <input id="bottom" name="bottom" type="number" placeholder='(R$)' class='price' required step="0.01" min="0" value={{saved_data.bottom}}><br>
+              </div>
+            </div>
+            <div class='parent flex-parent'>
+              <div class='child flex-child-title'>
+                Frequência (minutos): 
+              </div>
+              <div class='child flex-child'>
+                <input id="period" name="period" type="number" placeholder='(min)' class='time' min="1" required value={{saved_data.period}}><br>
+              </div>
+            </div>
+          </div>
+          <div class='child flex-child'>
+            <div class="monitor-price{% if data.change_percent >= 0 %}-positive{% endif %}">
+              <p>{{data.currency_symbol}} {{data.price|floatformat:2}}</p>
+              <div class="monitor-price-change">
+                ({% if data.change_percent >= 0 %}+{% endif %}{{data.change_percent|floatformat:2}}%)
+              </div>
+            </div>
+          </div>
+        </div>
+    
+    <button class='btn-monitor' id='do-monitor' type="submit">Salvar</button>
+    <a href="{% url 'remove' data.ticker %}" class='forgot'>Excluir</a>
+      </form>
+    </div>
+  </section>
+</div>
+{% endblock %}

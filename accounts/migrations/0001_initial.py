@@ -21,6 +21,9 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("ticker", models.CharField(max_length=10)),
+                ("bottom", models.FloatField()),
+                ("top", models.FloatField()),
+                ("period", models.IntegerField()),
             ],
         ),
     ]
