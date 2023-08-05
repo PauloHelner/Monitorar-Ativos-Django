@@ -4,37 +4,40 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  <p><a href="{% url 'logout' %}">Log Out</a></p>
-  <p><a href="{% url 'password_reset' %}">Reset Password</a></p>
   <div class="container">
     <h2>Cotação de Ativos da B3</h2>
-      {% if saved %}
-        <ul class="cards">
-          {% for ativo in saved %}
-            <li class="card">
-              <div>
-                <h3 class="card-title">{{ativo.ticker}}</h3>
-                <div class="card-subtitle">
-                  <p>{{ativo.name}}</p>
-                </div>
-                <div class="card-price{% if ativo.change_percent >= 0 %}-positive{% endif %}">
-                  <p>{{ativo.currency_symbol}} {{ativo.price|floatformat:2}}</p>
-                  <div class="card-price-change">
-                    ({% if ativo.change_percent >= 0 %}+{% endif %}{{ativo.change_percent|floatformat:2}}%)
-                  </div>
+    {% if saved %}
+      <ul class="cards">
+        {% for ativo in saved %}
+          <li class="card">
+            <div>
+              <h3 class="card-title">{{ativo.ticker}}</h3>
+              <div class="card-subtitle">
+                <p>{{ativo.name}}</p>
+              </div>
+              <div class="card-price{% if ativo.change_percent >= 0 %}-positive{% endif %}">
+                <p>{{ativo.currency_symbol}} {{ativo.price|floatformat:2}}</p>
+                <div class="card-price-change">
+                  ({% if ativo.change_percent >= 0 %}+{% endif %}{{ativo.change_percent|floatformat:2}}%)
                 </div>
               </div>
-              <div class="card-link-wrapper">
-                <a href="{% url 'monitor' ativo.ticker %}" class="card-link">Monitoramento</a>
-              </div>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <h2>Selecione o código de um ativo para salvá-lo.</h2>
-      {% endif %}
+            </div>
+            <div class="card-link-wrapper">
+              <a href="{% url 'monitor' ativo.ticker %}" class="card-link">Monitoramento</a>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+    <h2>Selecione o código de um ativo para salvá-lo.</h2>
+    {% endif %}
     <div class="table-container">
+      <select id="ticker" class="select_ticker" onchange="location = this.value;">  
+        <option class="option_ticker" value="">Procurar...</option>
+        {% for ticker in ticker_list %}
+          <option value="{% url 'add' ticker %}">{{ticker}}</option>
+        {% endfor %}
+       </select>
       <table class="styled-table">
         <thead>
           <tr>
@@ -64,11 +67,38 @@
         </tbody>
       </table>
     </div>
+    <div class="centered_div">
+      {% if pag|add:"0" > 10 %}
+        <a href="{% url 'pag' pag|add:"-10" %}" class="page_button">&laquo; Voltar 10</a>
+      {% endif %}
+      {% if pag|add:"0" > 1 %}
+        <a href="{% url 'pag' pag|add:"-1" %}" class="page_button">&#8249;</a>
+      {% endif %}
+      <div class="counter">Página {{pag}} de {{total_pag}}</div>
+      {% if pag|add:"0" <  total_pag|add:"0" %}
+        <a href="{% url 'pag' pag|add:"1" %}" class="page_button">&#8250;</a>
+      {% endif %}
+      {% if pag|add:"0" < total_pag|add:"-9" %}
+        <a href="{% url 'pag' pag|add:"10" %}" class="page_button">Avançar 10 &raquo;</a>
+      {% endif %}
+    </div>
+    <div class="centered_div">
+      <a href="{% url 'logout' %}" class="page_button">Log Out</a>
+    </div>
   </div>
   
 
 {% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">Log In</a>
+  <div class='monitor-div'>
+    <section class='monitor' id='monitor'>
+      <div class='head'>
+        <h1 class='company'>Login Necessário</h1>
+      </div>
+      <div class="centered_div">
+        <a href="{% url 'login' %}" class="page_button">Log In</a>
+      </div>
+      <div class='parent grid-parent'></div>
+    </section>
+  </div>
 {% endif %}
 {% endblock %}

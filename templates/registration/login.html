@@ -3,10 +3,20 @@
 {% block title %}Log In{% endblock %}
 
 {% block content %}
-<h2>Log In</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Log In</button>
-</form>
+<div class='monitor-div'>
+  <section class='monitor' id='monitor'>
+    <div class='head'>
+      <h1 class='company'>Login</h1>
+    </div>
+    <div class="centered_div">
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class='btn-monitor' type="submit">Entrar</button>
+        <a href="{% url 'signup' %}" class='forgot_pass'>Realizar cadastro</a>
+      </form>
+    </div>
+    <div class='parent grid-parent'></div>
+  </section>
+</div>
 {% endblock %}

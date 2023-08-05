@@ -325,7 +325,7 @@ h2 {
 .monitor .form .time::placeholder {
     color: #707075;
 }
-.monitor .form .btn-monitor {
+.btn-monitor {
     display: inline-block;
     color: white;
     background-image: linear-gradient(to bottom left,#e14eca,#ba54f5,#e14eca);
@@ -333,6 +333,7 @@ h2 {
     border-radius: 8px;
     border-width: 0;
     cursor:pointer;
+    font-size: 15px;
 }
 .monitor .forgot {
     text-decoration: none;
@@ -375,3 +376,91 @@ h2 {
     max-width: 100%;
     font-size: 12px;
 }
+
+.page_button {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    background-image: linear-gradient(to bottom left,#e14eca,#ba54f5,#e14eca);
+    padding: 5px 10px;
+    border-radius: 15px;
+    transition: background 0.2s;
+    margin-top: 20px;
+    font-size: 12px;
+}
+
+.counter {
+    display: inline-block;
+    font-size: 12px;
+}
+
+.centered_div {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.forgot_pass {
+    text-decoration: none;
+    color: var(--primary);
+    float: right;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+
+.email_field {
+    font-family:Poppins,sans-serif;
+    border: none;
+    background: none;
+    box-shadow: 0px 1px 0px 0px #BFBFC5;
+    width: 200px;
+    font-size: 17px;
+    outline: none;
+    color: #BFBFC5;
+    margin-bottom: 20px;
+}
+
+.pass_field {
+    font-family:Poppins,sans-serif;
+    border: none;
+    background: none;
+    box-shadow: 0px 1px 0px 0px #BFBFC5;
+    width: 200px;
+    font-size: 17px;
+    outline: none;
+    color: #BFBFC5;
+    margin-bottom: 20px;
+}
+
+.select_ticker {
+    /* Reset */
+    appearance: none;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    font-size: 15px;
+    /* Personalize */
+    height: 2em;
+    padding: 0 4em 0 1em;
+    background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg)
+      no-repeat right 0.8em center / 1.4em,
+      linear-gradient(to bottom left,#e14eca,#ba54f5,#e14eca);
+    color: white;
+    border-radius: 0.25em;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    /* <option> colors */
+  }
+
+option {
+    color: inherit;
+    background-color: var(--light-backgorund);
+  }
+  /* Remove focus outline */
+  &:focus {
+    outline: none;
+  }
+  /* Remove IE arrow */
+  &::-ms-expand {
+    display: none;
+  }

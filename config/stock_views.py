@@ -1,4 +1,3 @@
-from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -49,7 +48,7 @@ class Monitoring_Thread(threading.Thread):
                     + "\nA cotação atual é de R$ "
                     + str("%.2f" % data[self.stock.ticker]["regularMarketPrice"]),
                     "sistema@monitoramento.com",
-                    [self.user.username],
+                    [self.user.email],
                     fail_silently=False,
                 )
             if data[self.stock.ticker]["regularMarketPrice"] <= self.stock.bottom:
@@ -58,11 +57,11 @@ class Monitoring_Thread(threading.Thread):
                     "O seu ativo de código "
                     + str(self.stock.ticker)
                     + " está abaixo da cotação limite de R$ "
-                    + str("%.2f" % self.stock.top, 2)
+                    + str("%.2f" % self.stock.bottom)
                     + "\nA cotação atual é de R$ "
                     + str("%.2f" % data[self.stock.ticker]["regularMarketPrice"]),
                     "sistema@monitoramento.com",
-                    [self.user.username],
+                    [self.user.email],
                     fail_silently=False,
                 )
             time.sleep(60 * period)
@@ -102,10 +101,11 @@ class Ativo:
 #   fim do código global -------------------------------------------------------
 
 
-def home(request):
+def home(request, num=1):
     global THREADLESS
     ativos_list = []
     saved_list = []
+    ticker_list = []
     if request.user.is_authenticated:
         api_request = requests.get("https://brapi.dev/api/available")
         saved_tickers = Stock.objects.filter(owner=request.user)
@@ -121,16 +121,35 @@ def home(request):
             api = "error"
         try:
             api = json.loads(api_request.content)
-            ticker_list = []
             for element in api["stocks"]:
                 ticker_list.append(element + ".SA")
+            page_offset = 10 * (int(num) - 1)
             for index in range(10):
-                new_data = yq.Ticker(ticker_list[index]).price
-                ativo = Ativo(ticker_list[index], new_data[ticker_list[index]])
-                ativos_list.append(ativo)
+                if (index + page_offset) < len(ticker_list):
+                    new_data = yq.Ticker(ticker_list[index + page_offset]).price
+                    ativo = Ativo(
+                        ticker_list[index + page_offset],
+                        new_data[ticker_list[index + page_offset]],
+                    )
+                    ativos_list.append(ativo)
+            ticker_list.sort()
         except Exception as e:
             api = "error"
-    return render(request, "home.html", {"api": ativos_list, "saved": saved_list})
+    return render(
+        request,
+        "home.html",
+        {
+            "api": ativos_list,
+            "saved": saved_list,
+            "pag": num,
+            "total_pag": int(len(ticker_list) / 10) + (len(ticker_list) % 10 > 0),
+            "ticker_list": ticker_list,
+        },
+    )
+
+
+def home_pag(request, num):
+    return home(request, num)
 
 
 def add_stock(request, saved_ticker):
@@ -186,6 +205,7 @@ def remove_stock(request, remove_ticker):
 
 def logout(request):
     global THREADLESS
+    global THREAD_LIST
     THREADLESS = True
     for thread in THREAD_LIST.values():
         thread.kill()
