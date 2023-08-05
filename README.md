@@ -8,6 +8,10 @@
 - Configurar valor de venda e de compra para o monitoramento de ativos.
 - Receber e-mails de alerta sobre preço dos ativos.
 
+## Imagens:
+
+![image](https://github.com/PauloHelner/Monitorar-Ativos-Django/assets/74505147/2e5bf107-e2f6-4f59-acc2-8a3112650857)
+
 ## Funcionamento:
 
 É feita consulta à API brapi, da qual são obtidos os códigos (tickers) dos ativos listados na B3. A partir daí, esses ativos são utilizados para fazer consultas à API YahooQuery, a qual possui uma frequência maior de atualização de dados que a API brapi.
