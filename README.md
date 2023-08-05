@@ -4,7 +4,7 @@
 
 - Realizar Cadastro e Login.
 - Listar código, nome, preço do último fechamento, preço de abertura e preço atual de ativos da B3, com base no banco de dados do Yahoo Finance.
-- Selecionar ativos para monitorar com frequência mínima de 1 minuto.
+- Selecionar ativos para monitorar com frequência de até 1 minuto.
 - Configurar valor de venda e de compra para o monitoramento de ativos.
 - Receber e-mails de alerta sobre preço dos ativos.
 
