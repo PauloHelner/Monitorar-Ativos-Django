@@ -21,6 +21,9 @@ Obs:
 > A página inicial faz diversas consultas à database do Yahoo, e pode levar alguns segundos para carregar. Vale ressaltar também que os códigos (tickers) utilizados pela API do Yahoo têm final .SA para indicar aqueles pertencentes ao mercado brasileiro.
 
 Obs:
+> As threads ficam ativas apenas enquanto o usuário está logado. Caso houvesse pretenção de efetivamente dar prosseguimento à aplicação, o gerenciamento de threads deveria ocorrer a todo instante. Entretanto, isso foge do atual escope do projeto.
+
+Obs:
 > O envio de e-mails está implementado, entretanto, optou-se por não realizar o efetivo envio de e-mails por questão de segurança. Por esse motivo, os emails enviados são salvos no diretório /sent_emails. Para realizar o envio efetivo de e-mails, basta realizar as seguintes alterações no arquivo setting.py:
 
 ```python
